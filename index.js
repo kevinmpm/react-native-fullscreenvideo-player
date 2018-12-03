@@ -155,6 +155,7 @@ export default class VideoPlayer extends Component {
     }
     this.setState({
       progress: event.currentTime / (this.props.duration || this.state.duration),
+      currentTime: event.currentTime,
     });
   }
 
@@ -202,8 +203,8 @@ export default class VideoPlayer extends Component {
   onToggleFullScreen() {
     if(Platform.OS === "android")
     {
-      var uri = this.props.video.uri;
-      NativeModules.BridgeModule.showFullscreen(uri);
+      const uri = this.props.video.uri;
+      NativeModules.BridgeModule.showFullscreen(uri, this.state.currentTime || 0);
     }
     else
     {
